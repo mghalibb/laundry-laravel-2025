@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::table('trans_order', function (Blueprint $table) {
-                $table->integer('tax')->default(0)->after('order_pay');        // Pajak (Rupiah)
-                $table->integer('admin_fee')->default(0)->after('tax');        // Biaya Admin (Rupiah)
+        Schema::table('trans_order', function (Blueprint $table) {
+            $table->integer('tax')->default(0)->after('order_pay');
+            $table->integer('admin_fee')->default(0)->after('tax');
         });
 
         Schema::table('trans_order_detail', function (Blueprint $table) {
-            $table->double('qty', 8, 3)->change();
+            $table->decimal('qty', 8, 3)->change(); 
         });
     }
 
@@ -27,11 +27,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('trans_order', function (Blueprint $table) {
-        $table->dropColumn(['tax', 'admin_fee']);
-    });
+            $table->dropColumn(['tax', 'admin_fee']);
+        });
 
-    Schema::table('trans_order_detail', function (Blueprint $table) {
-        $table->integer('qty')->change();
-    });
+        Schema::table('trans_order_detail', function (Blueprint $table) {
+            $table->integer('qty')->change();
+        });
     }
 };

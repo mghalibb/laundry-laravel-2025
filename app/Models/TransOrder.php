@@ -28,7 +28,8 @@ class TransOrder extends Model
 
     public function getTotalPriceAttribute()
     {
-        return $this->details->sum('subtotal');
+        $subtotal = $this->details->sum('subtotal');
+        return $subtotal + $this->tax + $this->admin_fee;
     }
 
     public function pickup()

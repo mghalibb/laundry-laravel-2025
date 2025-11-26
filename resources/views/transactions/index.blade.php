@@ -128,10 +128,10 @@
                                     <tr>
                                         <td><strong>{{ $trx->order_code }}</strong></td>
                                         <td>{{ \Carbon\Carbon::parse($trx->order_date)->format('d M Y') }}</td>
-                                        <td>{{ $trx->customer_name }}</td>
+                                        <td>{{ $trx->customer->nama }}</td>
                                         <td>{{ $trx->details->count() }} Layanan</td>
                                         <td>
-                                            Rp {{ number_format($trx->total_calculated, 2, ',', '.') }}
+                                            Rp {{ number_format($trx->total_price, 0, ',', '.') }}
                                         </td>
                                         <td>
                                             @if ($trx->order_status == '0')
@@ -254,26 +254,51 @@
                                                                                         <td>
                                                                                             <small style="color: #555;">@
                                                                                                 Rp
-                                                                                                {{ number_format($detail->service->price, 0, ',', '.') }}</small>
+                                                                                                {{ number_format($detail->service->price, 2, ',', '.') }}</small>
                                                                                         </td>
                                                                                         <td style="text-align: center;">
                                                                                             x{{ $detail->qty }}</td>
                                                                                         <td style="text-align: right;">
-                                                                                            {{ number_format($detail->subtotal, 0, ',', '.') }}
+                                                                                            {{ number_format($detail->subtotal, 2, ',', '.') }}
                                                                                         </td>
                                                                                     </tr>
                                                                                 @endforeach
                                                                             </tbody>
                                                                         </table>
-                                                                        <div class="total-struk">
-                                                                            <table style="width: 100%">
-                                                                                <tr>
-                                                                                    <td>TOTAL BAYAR:</td>
-                                                                                    <td style="font-size: 14px;">Rp
-                                                                                        {{ number_format($trx->total_price, 0, ',', '.') }}
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
+                                                                        <div class="total-struk"
+                                                                            style="border-top: 1px solid #000; padding-top: 5px; margin-top: 5px;">
+                                                                            {{-- Subtotal --}}
+                                                                            <div
+                                                                                style="display: flex; justify-content: space-between; font-size: 10px;">
+                                                                                <span>Subtotal</span>
+                                                                                <span>{{ number_format($trx->details->sum('subtotal'), 2, ',', '.') }}</span>
+                                                                            </div>
+
+                                                                            {{-- Biaya Admin --}}
+                                                                            @if ($trx->admin_fee > 0)
+                                                                                <div
+                                                                                    style="display: flex; justify-content: space-between; font-size: 10px;">
+                                                                                    <span>Biaya Admin</span>
+                                                                                    <span>{{ number_format($trx->admin_fee, 2, ',', '.') }}</span>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            {{-- Pajak --}}
+                                                                            @if ($trx->tax > 0)
+                                                                                <div
+                                                                                    style="display: flex; justify-content: space-between; font-size: 10px;">
+                                                                                    <span>Pajak</span>
+                                                                                    <span>{{ number_format($trx->tax, 2, ',', '.') }}</span>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            {{-- Grand Total --}}
+                                                                            <div class="grand-total"
+                                                                                style="border-top: 1px dashed #000; margin-top: 3px; padding-top: 3px;">
+                                                                                <span>TOTAL BAYAR</span>
+                                                                                <span>Rp
+                                                                                    {{ number_format($trx->total_price, 2, ',', '.') }}</span>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="footer-struk">
                                                                             <p>-- TERIMA KASIH --</p>

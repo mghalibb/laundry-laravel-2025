@@ -2,8 +2,10 @@
 
 @section('css')
     <style>
+        /* === TAMPILAN DI LAYAR (NORMAL) === */
         .invoice-box {
             max-width: 800px;
+            /* Di layar tetap lebar biar enak dilihat */
             margin: auto;
             padding: 30px;
             border: 1px solid #eee;
@@ -11,8 +13,10 @@
             background-color: white;
         }
 
+        /* === TAMPILAN SAAT DI-PRINT (STRUK THERMAL) === */
         @media print {
 
+            /* 1. Sembunyikan elemen web yang tidak perlu */
             .d-print-none,
             .page-title-box,
             footer,
@@ -22,9 +26,12 @@
                 display: none !important;
             }
 
+            /* 2. Reset Margin Halaman Browser */
             @page {
                 margin: 0;
+                /* Hilangkan margin bawaan browser */
                 size: auto;
+                /* Biarkan panjang kertas dinamis */
             }
 
             body {
@@ -33,18 +40,24 @@
                 padding: 0;
             }
 
+            /* 3. Setting Ukuran Kertas Thermal (58mm) */
             .invoice-box {
                 width: 58mm;
+                /* Lebar standar struk kecil */
                 max-width: 58mm;
                 margin: 0;
                 padding: 5px;
+                /* Jarak aman dari pinggir kertas */
                 border: none;
                 box-shadow: none;
                 font-size: 10px;
+                /* Font kecil */
                 font-family: 'Courier New', Courier, monospace;
+                /* Font kasir */
                 line-height: 1.2;
             }
 
+            /* 4. Penyesuaian Elemen Struk */
             h2,
             h3,
             h4,
@@ -97,6 +110,7 @@
                 font-size: 9px;
             }
 
+            /* Hilangkan badge warna-warni, ganti text biasa */
             .badge {
                 border: none !important;
                 color: black !important;
@@ -110,6 +124,8 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12">
+
+            {{-- TOMBOL AKSI (Hilang saat print) --}}
             <div class="page-title-box d-print-none d-flex align-items-center justify-content-between mb-3">
                 <h4 class="page-title">Detail Transaksi</h4>
                 <div>
@@ -122,14 +138,18 @@
                 </div>
             </div>
 
+            {{-- AREA STRUK --}}
             <div class="invoice-box card">
                 <div class="card-body p-0">
+
+                    {{-- HEADER TOKO --}}
                     <div class="header-struk">
                         <h4 style="font-weight: bold; text-transform: uppercase;">CLEANIFY LAUNDRY</h4>
                         <span>Jl. Karet Pasar Baru Barat</span><br>
                         <span>Telp: 0812-3456-7890</span>
                     </div>
 
+                    {{-- INFO TRANSAKSI --}}
                     <div class="info-struk">
                         <table style="width: 100%">
                             <tr>
@@ -146,11 +166,12 @@
                             </tr>
                             <tr>
                                 <td>Plg</td>
-                                <td>: {{ substr($transaction->customer_name, 0, 15) }}</td>
+                                <td>: {{ substr($transaction->customer->nama, 0, 15) }}</td>
                             </tr>
                         </table>
                     </div>
 
+                    {{-- LIST ITEM --}}
                     <table class="table-struk">
                         <thead>
                             <tr>
@@ -178,16 +199,18 @@
                         </tbody>
                     </table>
 
+                    {{-- TOTAL --}}
                     <div class="total-struk">
                         <table style="width: 100%">
                             <tr>
                                 <td>TOTAL BAYAR:</td>
-                                <td style="font-size: 14px;">Rp {{ number_format($grandTotal, 2, ',', '.') }}
+                                <td style="font-size: 14px;">Rp {{ number_format($transaction->total_price, 0, ',', '.') }}
                                 </td>
                             </tr>
                         </table>
                     </div>
 
+                    {{-- FOOTER --}}
                     <div class="footer-struk">
                         <p>-- TERIMA KASIH --</p>
                         <p>Barang tidak diambil > 30 hari<br>di luar tanggung jawab kami.</p>
