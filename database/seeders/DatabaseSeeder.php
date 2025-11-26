@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CustomerSeeder::class,
             ServiceSeeder::class,
+            MenuSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

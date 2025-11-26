@@ -19,87 +19,36 @@
             <div class="d-flex align-items-start flex-column w-100">
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-auto w-100">
-                    <li class="menu-label mt-2">
-                        <span>Main</span>
-                    </li>
+                    @foreach ($menus as $category => $items)
+                        @php
+                            $hasAccess = false;
+                            foreach ($items as $item) {
+                                $allowedRoles = explode(',', $item->roles);
+                                if (in_array(auth()->user()->level->nama_level, $allowedRoles)) {
+                                    $hasAccess = true;
+                                    break;
+                                }
+                            }
+                        @endphp
 
-                    <!--Dashboard-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('any', 'index') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
-                            <span>Dashboard</span>
-                            {{-- <span class="badge text-bg-info ms-auto">New</span> --}}
-                        </a>
-                    </li>
-                    <!--Dashboard-->
+                        @if ($hasAccess)
+                            <li class="menu-label mt-2">
+                                <span>{{ $category }}</span>
+                            </li>
 
-                    {{-- ========================================= --}}
-
-                    @if (in_array(auth()->user()->level->nama_level, ['Superadmin', 'Administrator']))
-                        <li class="menu-label mt-2">
-                            <span>Master Data</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('users*') ? 'active' : '' }}"
-                                href="{{ route('users.index') }}">
-                                <i class="bi bi-person-gear menu-icon"></i>
-                                <span>Data User</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('customers*') ? 'active' : '' }}"
-                                href="{{ route('customers.index') }}">
-                                <i class="bi bi-people menu-icon"></i>
-                                <span>Data Pelanggan</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('services*') ? 'active' : '' }}"
-                                href="{{ route('services.index') }}">
-                                <i class="bi bi-list-check menu-icon"></i>
-                                <span>Jenis Layanan</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    {{-- ========================================= --}}
-
-                    @if (in_array(auth()->user()->level->nama_level, ['Superadmin', 'Administrator', 'Operator']))
-                        <li class="menu-label mt-2">
-                            <span>Transaksi</span>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link"{{ Request::is('transactions*') ? 'active' : '' }}"
-                                href="{{ route('transactions.index') }}">
-                                <i class="bi bi-cart-plus menu-icon"></i>
-                                <span>Transaksi Laundry</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('pickups*') ? 'active' : '' }}"
-                                href="{{ route('pickups.index') }}">
-                                <i class="bi bi-bag-check menu-icon"></i>
-                                <span>Pengambilan</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    {{-- ========================================= --}}
-
-                    @if (in_array(auth()->user()->level->nama_level, ['Superadmin', 'Administrator', 'Operator', 'Leader']))
-                        <li class="menu-label mt-2">
-                            <span>Laporan</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('reports*') ? 'active' : '' }}"
-                                href="{{ route('reports.index') }}">
-                                <i class="bi bi-bar-chart menu-icon"></i>
-                                <span>Laporan Penjualan</span>
-                            </a>
-                        </li>
-                    @endif
+                            @foreach ($items as $menu)
+                                @if (in_array(auth()->user()->level->nama_level, explode(',', $menu->roles)))
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ Request::routeIs($menu->url . '*') ? 'active' : '' }}"
+                                            href="{{ Route::has($menu->url) ? route($menu->url) : '#' }}">
+                                            <i class="{{ $menu->icon }} menu-icon"></i>
+                                            <span>{{ $menu->title }}</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
                 </ul>
             </div>
         </div>

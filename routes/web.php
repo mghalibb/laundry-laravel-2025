@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\UserController;
@@ -59,6 +60,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/print', [ReportController::class, 'print'])->name('reports.print');
     // --- REPORTS ---
+
+    // --- MENUS ---
+    Route::resource('menus', MenuController::class);
+    // --- MENUS ---
 });
 
 // --- GRUP ROUTING CONTROLLER ---

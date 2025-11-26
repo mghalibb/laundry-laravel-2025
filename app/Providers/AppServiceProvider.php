@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Models\Menu;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('layouts.partials.startbar', function ($view) {
+            $menus = Menu::where('is_active', true)->orderBy('order', 'ASC')->get()->groupBy('category');
+
+            $sortedMenus = $menus->sortBy(function ($items, $key) {
+                return $items->min('order');
+            });
+
+            $view->with('menus', $sortedMenus);
+        });
     }
 }
