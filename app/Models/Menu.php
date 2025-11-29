@@ -18,4 +18,10 @@ class Menu extends Model
         'order',
         'is_active'
     ];
+
+    // Menus can have multiple Levels
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class, 'level_menu', 'id_menu', 'id_level');
+    }
 }

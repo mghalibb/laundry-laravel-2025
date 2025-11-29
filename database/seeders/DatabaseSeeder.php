@@ -21,9 +21,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LevelSeeder::class,
             UserSeeder::class,
+            MenuSeeder::class,
+            LevelMenuSeeder::class,
             CustomerSeeder::class,
             ServiceSeeder::class,
-            MenuSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

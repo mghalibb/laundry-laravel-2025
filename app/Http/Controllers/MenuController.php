@@ -44,9 +44,16 @@ class MenuController extends Controller
         ]);
 
         $data = $request->all();
-        $data['roles'] = implode(',', $request->roles);
 
-        Menu::create($data);
+        if($request->has('roles')) {
+            $roleNames = Level::whereIn('id', $request->roles)->pluck('nama_level')->toArray();
+            $data['roles'] = implode(',', $roleNames);
+        }
+
+        $menu = Menu::create($data);
+        if($request->has('roles')) {
+            $menu->levels()->attach($request->roles);
+        }
 
         Alert::success('Success', 'Menu berhasil ditambahkan!');
         return redirect()->route('menus.index');
@@ -82,11 +89,17 @@ class MenuController extends Controller
         ]);
 
         $menu = Menu::findOrFail($id);
-
         $data = $request->except(['_token', '_method']);
-        $data['roles'] = implode(',', $request->roles);
+
+        if (isset($request->roles)) {
+            $roleNames = Level::whereIn('id', $request->roles)->pluck('nama_level')->toArray();
+            $data['roles'] = implode(',', $roleNames);
+        } else {
+            $data['roles'] = '';
+        }
 
         $menu->update($data);
+        $menu->levels()->sync($request->roles ?? []);
 
         Alert::success('Success', 'Menu berhasil diperbarui!');
         return redirect()->route('menus.index');

@@ -34,6 +34,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('levels', LevelController::class);
     // --- LEVEL ---
 
+    // --- ASSIGN ROLE ---
+    Route::post('levels/assign/{user}', [LevelController::class, 'assignLevel'])->name('levels.assign');
+    // --- ASSIGN ROLE ---
+
     // --- RECYCLE BIN ---
     Route::get('users-trash', [UserController::class, 'trash'])->name('users.trash');
     Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');

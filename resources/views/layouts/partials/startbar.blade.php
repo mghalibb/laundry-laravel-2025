@@ -17,7 +17,6 @@
     <div class="startbar-menu">
         <div class="startbar-collapse" id="startbarCollapse" data-simplebar>
             <div class="d-flex align-items-start flex-column w-100">
-                <!-- Navigation -->
                 <ul class="navbar-nav mb-auto w-100">
                     @foreach ($menus as $category => $items)
                         @php
@@ -38,9 +37,31 @@
 
                             @foreach ($items as $menu)
                                 @if (in_array(auth()->user()->level->nama_level, explode(',', $menu->roles)))
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a class="nav-link {{ Request::routeIs($menu->url . '*') ? 'active' : '' }}"
-                                            href="{{ Route::has($menu->url) ? route($menu->url) : '#' }}">
+                                            href="{{ Route::has($menu->url) ? route($menu->url) : 'inc.error-404' }}">
+                                            <i class="{{ $menu->icon }} menu-icon"></i>
+                                            <span>{{ $menu->title }}</span>
+                                        </a>
+                                    </li> --}}
+
+                                    @php
+                                        $linkHref = '#';
+                                        $isActive = false;
+                                        // Cek apakah ini Nama Route yang terdaftar di web.php (Contoh: users.index)
+                                        if (Route::has($menu->url)) {
+                                            $linkHref = route($menu->url);
+                                            $isActive = Request::routeIs($menu->url . '*');
+                                        }
+                                        // Jika bukan route, anggap sebagai URL Path manual (Contoh: auth/dark)
+                                        else {
+                                            $cleanUrl = str_replace('.', '/', $menu->url);
+                                            $linkHref = url($cleanUrl);
+                                            $isActive = Request::is($cleanUrl . '*');
+                                        }
+                                    @endphp
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $isActive ? 'active' : '' }}" href="{{ $linkHref }}">
                                             <i class="{{ $menu->icon }} menu-icon"></i>
                                             <span>{{ $menu->title }}</span>
                                         </a>

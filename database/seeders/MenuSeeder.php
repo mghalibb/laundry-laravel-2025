@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Menu;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Menu;
 
 class MenuSeeder extends Seeder
 {
@@ -16,68 +16,78 @@ class MenuSeeder extends Seeder
     // DASHBOARD
     Menu::create([
         'title' => 'Dashboard',
-        'url' => 'dashboard',
-        'icon' => 'iconoir-report-columns',
+        'url' => 'index',
+        'icon' => 'iconoir-report-columns menu-icon',
         'category' => 'Main',
-        'roles' => 'Superadmin,Administrator,Operator,Pimpinan',
+        'roles' => 'Superadmin,Administrator,Operator,Leader,Customer',
         'order' => 1
     ]);
+    // DASHBOARD
 
     // MASTER DATA
     Menu::create([
         'title' => 'Data User',
         'url' => 'users.index',
-        'icon' => 'bi bi-person-gear',
+        'icon' => 'bi bi-person-gear menu-icon',
         'category' => 'Master Data',
         'roles' => 'Superadmin,Administrator',
         'order' => 2
     ]);
-
+    
     Menu::create([
-        'title' => 'Data Pelanggan',
-        'url' => 'customers.index',
-        'icon' => 'bi bi-people',
+        'title' => 'Data Lavel',
+        'url' => 'levels.index',
+        'icon' => 'bi bi-shield-check menu-icon',
         'category' => 'Master Data',
         'roles' => 'Superadmin,Administrator',
         'order' => 3
     ]);
 
     Menu::create([
-        'title' => 'Jenis Layanan',
-        'url' => 'services.index',
-        'icon' => 'bi bi-list-check',
+        'title' => 'Data Pelanggan',
+        'url' => 'customers.index',
+        'icon' => 'bi bi-people menu-icon',
         'category' => 'Master Data',
         'roles' => 'Superadmin,Administrator',
         'order' => 4
+    ]);
+
+    Menu::create([
+        'title' => 'Jenis Layanan',
+        'url' => 'services.index',
+        'icon' => 'bi bi-list-check menu-icon',
+        'category' => 'Master Data',
+        'roles' => 'Superadmin,Administrator',
+        'order' => 5
     ]);
 
     // TRANSAKSI
     Menu::create([
         'title' => 'Transaksi Laundry',
         'url' => 'transactions.index',
-        'icon' => 'bi bi-cart-plus',
+        'icon' => 'bi bi-cart-plus menu-icon',
         'category' => 'Transaksi',
         'roles' => 'Superadmin,Administrator,Operator',
-        'order' => 5
+        'order' => 6
     ]);
 
     Menu::create([
         'title' => 'Pengambilan',
         'url' => 'pickups.index',
-        'icon' => 'bi bi-bag-check',
+        'icon' => 'bi bi-bag-check menu-icon',
         'category' => 'Transaksi',
         'roles' => 'Superadmin,Administrator,Operator',
-        'order' => 6
+        'order' => 7
     ]);
 
     // LAPORAN
     Menu::create([
         'title' => 'Laporan Penjualan',
         'url' => 'reports.index',
-        'icon' => 'bi bi-bar-chart',
+        'icon' => 'bi bi-bar-chart menu-icon',
         'category' => 'Laporan',
         'roles' => 'Superadmin,Administrator,Pimpinan',
-        'order' => 7
+        'order' => 8
     ]);
 
     // MANAJEMEN MENU

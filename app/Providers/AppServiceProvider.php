@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Models\Menu;
 
@@ -22,12 +23,23 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('layouts.partials.startbar', function ($view) {
-            $menus = Menu::where('is_active', true)->orderBy('order', 'ASC')->get()->groupBy('category');
+            $user = Auth::user();
+            if (!$user) {
+                return;
+            }
 
-            $sortedMenus = $menus->sortBy(function ($items, $key) {
+            $menus = Menu::where('is_active', true)
+                ->whereHas('levels', function($query) use ($user) {
+                    $query->where('id_level', $user->id_level);
+                })
+                ->orderBy('order', 'ASC')
+                ->get()
+                ->groupBy('category');
+
+            $sortedMenus = $menus->sortBy(function ($items) {
                 return $items->min('order');
             });
-
+        
             $view->with('menus', $sortedMenus);
         });
     }

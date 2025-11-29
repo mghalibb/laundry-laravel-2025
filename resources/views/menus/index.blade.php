@@ -19,6 +19,19 @@
         padding: 0.5rem 0.9rem;
         font-size: 16px;
         font-weight: 900;
+        margin: 1rem 0;
+    }
+
+    /* Remove the arrow for Chrome, Safari, Edge, Opera */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Remove the arrow for Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
     }
 </style>
 @section('content')
@@ -58,13 +71,13 @@
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="text-center" width="5%">NO</th>
-                                    <th scope="col">NAMA MENU</th>
-                                    <th scope="col">KATEGORI</th>
+                                    <th scope="col">MENU NAME</th>
+                                    <th scope="col">CATEGORY</th>
                                     <th scope="col">URL / ROUTE</th>
                                     <th scope="col">ICON</th>
-                                    <th scope="col">Hak Akses</th>
-                                    <th scope="col">Urutan</th>
-                                    <th scope="col">AKSI</th>
+                                    <th scope="col">ACCESS RIGHTS</th>
+                                    <th scope="col">ORDER</th>
+                                    <th scope="col" class="text-center" width="15%">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,8 +90,13 @@
                                         <td><i class="{{ $menu->icon }} fs-5"></i> <span
                                                 class="text-muted small">({{ $menu->icon }})</span></td>
                                         <td>
-                                            @foreach (explode(',', $menu->roles) as $role)
-                                                <span class="badge bg-info-subtle text-info">{{ $role }}</span>
+                                            {{-- @foreach (explode(',', $menu->roles) as $role)
+                                                <span class="badge bg-info-subtle text-info"
+                                                    style="margin: 4px 0">{{ $role }}</span>
+                                            @endforeach --}}
+                                            @foreach ($menu->levels as $level)
+                                                <span class="badge bg-info-subtle text-info"
+                                                    style="margin: 4px 0">{{ $level->nama_level }}</span>
                                             @endforeach
                                         </td>
                                         <td class="text-center">{{ $menu->order }}</td>
@@ -153,9 +171,9 @@
                                                             @foreach ($levels as $level)
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="checkbox"
-                                                                        name="roles[]" value="{{ $level->nama_level }}"
+                                                                        name="roles[]" value="{{ $level->id }}"
                                                                         id="roleEdit{{ $menu->id }}{{ $level->id }}"
-                                                                        {{ in_array($level->nama_level, explode(',', $menu->roles)) ? 'checked' : '' }}>
+                                                                        {{ $menu->levels->contains('id', $level->id) ? 'checked' : '' }}>
                                                                     <label class="form-check-label"
                                                                         for="roleEdit{{ $menu->id }}{{ $level->id }}">{{ $level->nama_level }}</label>
                                                                 </div>
@@ -250,7 +268,7 @@
                             @foreach ($levels as $level)
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" name="roles[]"
-                                        value="{{ $level->nama_level }}" id="roleAdd{{ $level->id }}">
+                                        value="{{ $level->id }}" id="roleAdd{{ $level->id }}">
                                     <label class="form-check-label"
                                         for="roleAdd{{ $level->id }}">{{ $level->nama_level }}</label>
                                 </div>

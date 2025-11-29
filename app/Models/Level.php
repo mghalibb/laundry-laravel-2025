@@ -15,7 +15,9 @@ class Level extends Model
     protected $table = 'levels';
     protected $guarded = ['id'];
     protected $fillable = [
-        'name',
+        'nama_level',
+        'description',
+        'status',
     ];
 
     /**
@@ -24,5 +26,10 @@ class Level extends Model
     public function users()
     {
         return $this->hasMany(User::class, 'id_level');
+    }
+
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'level_menu', 'id_level', 'id_menu');
     }
 }

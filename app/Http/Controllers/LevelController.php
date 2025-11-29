@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Level;
+use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -16,7 +17,7 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::orderBy('id', 'ASC')->get();
-        $users = User::with('level')->orderBy('level_id', 'ASC')->get();
+        $users = User::with('level')->orderBy('id_level', 'ASC')->get();
         return view('levels.index', compact('levels', 'users'));
     }
 
@@ -34,11 +35,15 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:levels,name|max:255',
+            'nama_level' => 'required|string|max:255|unique:levels,nama_level',
+            'description' => 'nullable|string|max:255',
+            'status' => 'required|in:Active,Inactive',
         ]);
 
         Level::create([
-            'name' => $request->name,
+            'nama_level' => $request->nama_level,
+            'description' => $request->description,
+            'status' => $request->status,
         ]);
 
         Alert::success('Success', 'Level Successfully Added!');
@@ -67,12 +72,27 @@ class LevelController extends Controller
     public function update(Request $request, Level $level): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:levels,name,' . $level->id,
+            'nama_level' => 'required|string|max:255|unique:levels,nama_level,' . $level->id,
+            'description' => 'nullable|string|max:255',
+            'status' => 'required|in:Active,Inactive',
         ]);
 
+        $oldName = $level->nama_level;
+        $newName = $request->nama_level;
+
         $level->update([
-            'name' => $request->name,
+            'nama_level' => $newName,
+            'description' => $request->description,
+            'status' => $request->status,
         ]);
+
+        if ($oldName !== $newName) {
+            $menus = Menu::where('roles', 'like', "%$oldName%")->get();
+            foreach($menus as $menu) {
+                $updatedRoles = str_replace($oldName, $newName, $menu->roles);
+                $menu->update(['roles' => $updatedRoles]);
+            }
+        }
 
         Alert::success('Success', 'Level Successfully Updated!');
         return redirect()->route('levels.index');
@@ -83,14 +103,26 @@ class LevelController extends Controller
      */
     public function destroy(Level $level): RedirectResponse
     {
-        if ($level->users()->count() > 0) {
-            Alert::error('Failed', 'This level is still assigned to users and cannot be deleted.');
-            return redirect()->back();
+        if (in_array($level->id, [1, 2, 3, 4])) { 
+            return redirect()->back()->with('error', 'Level inti sistem tidak boleh dihapus!');
         }
 
         $level->delete();
 
         Alert::success('Success', 'Level Successfully Deleted!');
+        return redirect()->route('levels.index');
+    }
+
+    public function assignLevel(Request $request, User $user)
+    {
+        $request->validate([
+            'id_level' => 'required|exists:levels,id',
+        ]);
+
+        $user->id_level = $request->id_level;
+        $user->save();
+
+        Alert::success('Success', 'Level Assigned Successfully To ' . $user->name);
         return redirect()->route('levels.index');
     }
 }
