@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
             'username' => 'administrator',
             'email' => 'administrator123@gmail.com',
             'password' => Hash::make('admin123'),
-            'id_level' => 2,
+            'id_level' => 1,
         ]);
 
         User::create([
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             'username' => 'operator',
             'email' => 'operator123@gmail.com',
             'password' => Hash::make('admin123'),
-            'id_level' => 3,
+            'id_level' => 2,
         ]);
 
         User::create([
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
             'username' => 'owner',
             'email' => 'owner123@gmail.com',
             'password' => Hash::make('admin123'),
-            'id_level' => 4,
+            'id_level' => 3,
         ]);
     }
 }
