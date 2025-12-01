@@ -10,7 +10,7 @@
 ---
 
 ![Dashboard Preview](public/images/dashboard-preview.png)
-![Web Manual Book](https://mghalibb.github.io/laundry-laravel-2025-doc/)
+[![Web Manual Book](public/images/web-manual-book.png)](https://mghalibb.github.io/laundry-laravel-2025-doc/)
 
 ## 📑 Daftar Isi
 
