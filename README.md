@@ -9,8 +9,15 @@
 
 ---
 
+## 📊 Dashboard Preview
+
 ![Dashboard Preview](public/images/dashboard-preview.png)
+
+## 📖 Web Manual Book
+
 [![Web Manual Book](public/images/web-manual-book.png)](https://mghalibb.github.io/laundry-laravel-2025-doc/)
+
+---
 
 ## 📑 Daftar Isi
 
