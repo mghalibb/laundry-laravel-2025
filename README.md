@@ -10,6 +10,7 @@
 ---
 
 ![Dashboard Preview](public/images/dashboard-preview.png)
+![Web Manual Book](https://mghalibb.github.io/laundry-laravel-2025-doc/)
 
 ## 📑 Daftar Isi
 
