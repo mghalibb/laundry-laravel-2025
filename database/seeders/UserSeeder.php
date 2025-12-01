@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'id_level' => 3,
         ]);
-        
+
         User::create([
             'name' => 'Juragan Laundry',
             'username' => 'owner',

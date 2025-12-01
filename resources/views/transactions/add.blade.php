@@ -1,6 +1,14 @@
 @extends('layouts.vertical', ['title' => 'Transaksi Baru'])
 
 @section('css')
+    {{-- 1. CSS Select2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {{-- 1. CSS Select2 --}}
+
+    {{-- CSS Themes Bootstrap 5 --}}
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    {{-- CSS Themes Bootstrap 5 --}}
     <style>
         .total-text {
             font-size: 1.2rem;
@@ -43,6 +51,14 @@
             width: 50px;
             margin-right: 5px;
         }
+
+        .select2-container .select2-selection--single {
+            height: 38px !important;
+            padding: 0.5rem 0.8rem;
+            font-size: 14px;
+            font-weight: 900;
+            color: #000000;
+        }
     </style>
 @endsection
 
@@ -61,10 +77,19 @@
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <label class="form-label">Pilih Pelanggan</label>
-                                <select class="form-select" name="id_customer" required>
+                                {{-- <select class="form-select" name="id_customer" required>
                                     <option value="" disabled selected>-- Cari Nama Pelanggan --</option>
                                     @foreach ($customers as $customer)
                                         <option value="{{ $customer->id }}">{{ $customer->nama }} - {{ $customer->tlp }}
+                                        </option>
+                                    @endforeach
+                                </select> --}}
+
+                                <select class="form-select select2" name="id_customer" required>
+                                    <option value="" selected></option>
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id }}">
+                                            {{ $customer->nama }} - {{ $customer->tlp }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -222,6 +247,13 @@
 @endsection
 
 @section('script-bottom')
+    {{-- jQuery --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    {{-- jQuery --}}
+
+    {{-- JS Select2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- JS Select2 --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let rowCount = 1;
@@ -388,6 +420,15 @@
             }
             checkDeleteButtons();
             // === HAPUS BARIS ===
+        });
+
+        $(document).ready(function() {
+            $('.select2').select2({
+                theme: 'bootstrap-5',
+                placeholder: '-- Cari Nama Pelanggan --',
+                allowClear: true,
+                width: '100%'
+            });
         });
     </script>
 @endsection

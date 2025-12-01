@@ -159,4 +159,4 @@ npm run dev
 | :-------------- | :------------------------- | :------- |
 | `Administrator` | administrator123@gmail.com | admin123 |
 | `Operator`      | operator123@gmail.com      | admin123 |
-| `Pimpinan`      | owner123@gmail.com         | admin123 |
+| `Leader`        | owner123@gmail.com         | admin123 |

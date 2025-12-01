@@ -13,7 +13,10 @@ class PickupController extends Controller
 {
     public function index()
     {
-        $transactions = TransOrder::with(['customer', 'details', 'pickup'])->latest()->get();
+        $transactions = TransOrder::with(['customer', 'details', 'pickup'])
+                        ->where('order_status', '0')
+                        ->latest()
+                        ->get();
 
         return view('pickups.index', compact('transactions'));
     }

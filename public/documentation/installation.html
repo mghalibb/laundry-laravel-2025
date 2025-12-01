@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8" />
+        <title>Instalasi | Cleanify Docs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="assets/cleanify-logo.png" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="app.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="text-gray-800 bg-gray-50">
+        <div class="flex wrapper">
+            <app-menu></app-menu>
+
+            <div class="flex flex-col w-full min-h-screen">
+                <div class="container mx-auto px-6 py-8 grow max-w-5xl">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900">
+                            Panduan Instalasi
+                        </h1>
+                        <p class="text-gray-500 mt-2">
+                            Cara menjalankan source code di komputer lokal
+                            (Localhost).
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden"
+                    >
+                        <div class="p-8">
+                            <h3 class="text-lg font-bold mb-4">
+                                1. Prasyarat Sistem
+                            </h3>
+                            <ul
+                                class="list-disc pl-5 mb-6 text-gray-600 space-y-1"
+                            >
+                                <li>PHP >= 8.2</li>
+                                <li>Composer</li>
+                                <li>Node.js & NPM</li>
+                                <li>MySQL Database</li>
+                            </ul>
+
+                            <h3 class="text-lg font-bold mb-4">
+                                2. Langkah Instalasi
+                            </h3>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <p class="font-semibold text-gray-700 mb-2">
+                                        Step 1: Clone Repository & Install
+                                        Dependency
+                                    </p>
+                                    <pre
+                                        class="bg-slate-800 text-slate-100 p-4 rounded-lg overflow-x-auto"
+                                    ><code>git clone https://github.com/mghalibb/laundry-laravel-2025.git
+cd laundry-laravel-2025
+composer install
+npm install && npm run build</code></pre>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-700 mb-2">
+                                        Step 2: Konfigurasi Database (.env)
+                                    </p>
+                                    <p class="text-sm text-gray-600 mb-2">
+                                        Copy file
+                                        <code>.env.example</code> menjadi
+                                        <code>.env</code>, lalu atur database:
+                                    </p>
+                                    <pre
+                                        class="bg-slate-800 text-slate-100 p-4 rounded-lg overflow-x-auto"
+                                    ><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_laundry_cleanify
+DB_USERNAME=root
+DB_PASSWORD=</code></pre>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-700 mb-2">
+                                        Step 3: Generate Key & Seeding
+                                    </p>
+                                    <p class="text-sm text-gray-600 mb-2">
+                                        Perintah ini wajib dijalankan untuk
+                                        membuat data admin default dan menu
+                                        sidebar:
+                                    </p>
+                                    <pre
+                                        class="bg-slate-800 text-slate-100 p-4 rounded-lg overflow-x-auto"
+                                    ><code>php artisan key:generate
+php artisan migrate
+php artisan migrate:fresh --seed</code></pre>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-700 mb-2">
+                                        Step 4: Jalankan Server
+                                    </p>
+                                    <pre
+                                        class="bg-slate-800 text-slate-100 p-4 rounded-lg overflow-x-auto"
+                                    ><code>php artisan serve
+npm run dev</code></pre>
+                                    <p class="text-sm text-gray-600 mt-2">
+                                        Akses di browser:
+                                        <a
+                                            href="http://127.0.0.1:8000"
+                                            class="text-blue-600 underline"
+                                            >http://127.0.0.1:8000</a
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <app-footer></app-footer>
+            </div>
+        </div>
+    </body>
+</html>

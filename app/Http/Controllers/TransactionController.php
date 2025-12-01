@@ -17,7 +17,12 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = TransOrder::with(['customer', 'user', 'details.service', 'pickup'])->latest()->get();
+        $transactions = TransOrder::with(['customer', 'user', 'details.service', 'pickup'])
+                        // ->where('order_status', '0')
+                        ->orderBy('order_status', 'ASC')
+                        ->latest()
+                        ->get();
+
         return view('transactions.index', compact('transactions'));
     }
 

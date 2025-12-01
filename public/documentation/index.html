@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8" />
+        <title>Pengantar | Cleanify Docs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="assets/cleanify-logo.png" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="app.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="text-gray-800 bg-gray-50">
+        <div class="flex wrapper">
+            <app-menu></app-menu>
+
+            <div class="flex flex-col w-full min-h-screen">
+                <div class="container mx-auto px-6 py-8 grow max-w-5xl">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900">
+                            Pengantar Sistem
+                        </h1>
+                        <p class="text-gray-500 mt-2">
+                            Tentang Aplikasi Manajemen Laundry Cleanify
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-6">
+                        <div
+                            class="bg-white border border-gray-200 rounded-xl shadow-sm p-8"
+                        >
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                                Tentang Cleanify
+                            </h2>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                <strong>Cleanify</strong> adalah sistem
+                                informasi berbasis web yang dirancang untuk
+                                membantu pengelolaan operasional bisnis laundry
+                                secara lebih efektif dan efisien.
+                            </p>
+                            <p class="text-gray-600 leading-relaxed">
+                                Aplikasi ini menyediakan berbagai fitur utama
+                                seperti pengelolaan layanan (service), data
+                                pelanggan (customer), transaksi order dengan
+                                fitur <strong>Hitung Otomatis</strong>,
+                                manajemen user dinamis, hingga pembuatan laporan
+                                keuangan.
+                            </p>
+                        </div>
+
+                        <div
+                            class="bg-white border border-gray-200 rounded-xl shadow-sm p-8"
+                        >
+                            <h2 class="text-xl font-bold text-gray-800 mb-6">
+                                Hak Akses Pengguna (Multi-Role)
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div
+                                    class="p-5 rounded-lg bg-blue-50 border border-blue-100"
+                                >
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span
+                                            class="bg-blue-600 text-white p-2 rounded-md"
+                                            >👑</span
+                                        >
+                                        <h3 class="font-bold text-blue-900">
+                                            Administrator
+                                        </h3>
+                                    </div>
+                                    <p class="text-sm text-blue-800">
+                                        Memiliki hak akses penuh. Dapat
+                                        mengelola Data Master (User, Menu
+                                        Sidebar, Layanan), Konfigurasi Level,
+                                        dan melihat semua fitur.
+                                    </p>
+                                </div>
+
+                                <div
+                                    class="p-5 rounded-lg bg-emerald-50 border border-emerald-100"
+                                >
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span
+                                            class="bg-emerald-600 text-white p-2 rounded-md"
+                                            >🛒</span
+                                        >
+                                        <h3 class="font-bold text-emerald-900">
+                                            Operator
+                                        </h3>
+                                    </div>
+                                    <p class="text-sm text-emerald-800">
+                                        Bertugas di kasir. Fokus pada pencatatan
+                                        Transaksi Laundry, Cetak Struk, dan
+                                        Proses Pengambilan (Pickup).
+                                    </p>
+                                </div>
+
+                                <div
+                                    class="p-5 rounded-lg bg-purple-50 border border-purple-100"
+                                >
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span
+                                            class="bg-purple-600 text-white p-2 rounded-md"
+                                            >📈</span
+                                        >
+                                        <h3 class="font-bold text-purple-900">
+                                            Pimpinan
+                                        </h3>
+                                    </div>
+                                    <p class="text-sm text-purple-800">
+                                        Hanya memiliki akses untuk memantau
+                                        Dashboard Statistik dan Mencetak Laporan
+                                        Penjualan.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <app-footer></app-footer>
+            </div>
+        </div>
+    </body>
+</html>
