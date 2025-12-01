@@ -26,13 +26,13 @@ class LevelSeeder extends Seeder
         // ];
 
         $levels = [
-            [
-                'nama_level' => 'Superadmin',
-                'description' => 'Has full access to all system modules and user management.',
-                'status' => 'Active',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
+            // [
+            //     'nama_level' => 'Superadmin',
+            //     'description' => 'Has full access to all system modules and user management.',
+            //     'status' => 'Active',
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
             [
                 'nama_level' => 'Administrator',
                 'description' => 'Manages all master data (Customers, Services, Inventory). Cannot manage users.',
@@ -54,13 +54,13 @@ class LevelSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-            [
-                'nama_level' => 'Customer',
-                'description' => 'An individual or organization that has or has the potential to purchase goods or services from a business.',
-                'status' => 'Inactive',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
+            // [
+            //     'nama_level' => 'Customer',
+            //     'description' => 'An individual or organization that has or has the potential to purchase goods or services from a business.',
+            //     'status' => 'Inactive',
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
         ];
 
         DB::table('levels')->insert($levels);
