@@ -108,35 +108,46 @@ cd cleanify-laundry
 
 -Pastikan Composer dan Node.js sudah terinstall.
 
+```bash
 composer install
 npm install && npm run build
+```
 
 ### 3. Konfigurasi Environment
 
 -Duplikat file .env.example dan ubah namanya menjadi .env. Lalu atur koneksi database:
 
+```bash
 cp .env.example .env
+```
 
 -Buka file .env dan atur koneksi database:
 
+```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=laundry-laravel-2025
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
 ### 4. Generate Key & Database
 
 -Jalankan perintah ini untuk membuat key aplikasi dan mengisi database awal (Seeder):
 
+```bash
 php artisan key:generate
 php artisan migrate
 php artisan migrate:fresh --seed
+```
 
 ### 5. Jalankan Server
 
+```bash
 php artisan serve
+npm run dev
+```
 
 -Buka browser dan akses: http://127.0.0.1:8000
 
